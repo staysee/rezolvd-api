@@ -1,2 +1,11 @@
 language: node_js
 node_js: node
+services:
+  -mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: HjnoOLlONwXE/+9L1v5zRJiT+YmlPpXeeo/BYZYQI3ljmdQc7Fyq09OGV4vgrRxSuvtLFVHMGJWk8c0yVXaR8sAghI0QcJdDr1nkhGbtgrFBfDg6g/evRDNdXwQUISnaCJC1koAhK4l/NvuhyKI9qaj+ehzszMeYuRDVn//dz3PeHHmhLSPhKnF6OismBSR2WWl+h/wR32mREj1Jzr4DP7k4OM75hM0iMzingOH9MimXcV/JBGx3wGxB0QathUfAth9AarYjtuLj0GJjtnpMuKhk2Y9r9PWo2Umw3O6NWZ6URZeEK7+9+BC8RV0eBOZlqCAEvyqGr2AJNy31qxIi89Uixt4rhmEUmFMAobu+byTYk+7wqOuDOYSNdkf4lYt4z9Vyhx3oteUKZs36ldai+3GhZdD6Fx6qkDx+87Dy7+40GWvgpotiIRXKPZz2f5aLkw/6dTcJJvJgWSkASyJEFiLDEb8zJWOykf0qc44V8SouBkubSKrKHarxZ9Ylr2P5nu8kB8l4VGHS/q+bK5amOEGgIb32pZ80FOYR2753LYS5Q9aGVtQNoCTKkK4B4DV73IFWc2iTto52JOXDYVHPKrYcEoiYQdCxJKPC4OtaU1azHf4ci6QtpiLvtvHnkamFbYe/0dDH+5WooNftgrKqnE29KnJAA/Vse2MarH+N3Tg=
+  app: vast-waters-85721
+  on:
+    repo: staysee/rezolvd-api
