@@ -5,23 +5,19 @@ const jsonParser = bodyParser.json();
 
 const { Venue } = require('../models/venues');
 
-//send JSON representaiton of all venues on GET request to root
+//send JSON representation of all venues on GET request to root
 router.get('/', (req, res) => {
 	Venue
 		.find()
 		.then(venues => {
 			res.json({
-				venues: venues.map(
-					(venue) => venue.serialize()
-				)
+				venues: venues.map((venue) => venue.serialize())
 			});
 		})
-		.catch(
-			err => {
-				console.error(err);
-				res.status(500).json({message: 'Internal server error'});
-			}
-		);
+		.catch(err => {
+            console.error(err);
+            res.status(500).json({message: 'Internal server error'});
+		});
 });
 
 router.get('/:id', (req, res) => {
