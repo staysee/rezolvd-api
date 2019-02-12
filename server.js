@@ -3,10 +3,13 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const venueRouter = require('./routes/venueRouter');
+
 mongoose.Promise = global.Promise;
 
-const {DATABASE_URL, PORT} = require('./config');
 const { Venue } = require('./models/venues');
+const {DATABASE_URL, PORT} = require('./config');
+
 
 const jsonParser = bodyParser.json();
 const app = express();
@@ -25,73 +28,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-// VENUE
-app.get('/venues', (req, res) => {
-	Venue
-		.find()
-		.then(venues => {
-			res.json({
-				venues: venues.map(
-					(venue) => venue.serialize()
-				)
-			});
-		})
-		.catch(
-			err => {
-				console.error(err);
-				res.status(500).json({message: 'Internal server error'});
-			}
-		);
-});
-
-app.get('/venues/:id', (req, res) => {
-	Venue
-		.findById(req.params.id)
-		.then(venue => res.json(venue.serialize()))
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
-});
-
-app.post('/venues', jsonParser, (req, res) => {
-	const requiredFields = ['name'];
-	for (let i=0; i<requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const message = `Missing \`${field}\` in request body`;
-			console.error(message);
-			return res.status(400).send(message);
-		}
-	}
-
-	Venue
-		.create({
-			name: req.body.name
-		})
-		.then(venue => res.status(201).json(venue.serialize()))
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
-})
-
-app.delete('/venues/:id', (req, res) => {
-	Venue
-		.findByIdAndRemove(req.params.id)
-		.then(() => res.status(204).end())
-		.catch(err => res.status(500).json({message: 'Internal server error'}));
-})
-
-
-
-
-
+app.use('/api/venues', venueRouter);
 
 // catch-all endpoint if client makes request to non-existent endpoint
 app.use('*', (req, res) => {
 	res.status(404).json({message: 'Endpoint Not Found'});
 });
+
+
 
 // OPEN/CLOSE SERVER
 let server;
