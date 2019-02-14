@@ -26,17 +26,17 @@ function seedVenueData() {
 
 function generateVenueData(){
 	return {
-        name: faker.lorem.sentence(),
-        categories: faker.lorem.sentence(),
+        name: faker.lorem.words(),
+        categories: faker.company.bsNoun(),
         contact: {
-            phone: '1234567',
+            phone: faker.phone.phoneNumber(),
             address: faker.address.streetAddress(),
             coordinates: {
-                lat: 123,
-                lng: 123
+                lat: faker.address.latitude(),
+                lng: faker.address.latitude.longitude()
             }
         },
-        created: faker.date.future()
+        created: faker.date.past()
     }
 }
 
@@ -110,7 +110,7 @@ describe('Venues API Resource', function() {
 					res.body.venues.forEach(function(venue){
 						// console.info(venue
 						expect(venue).to.be.a('object');
-						expect(venue).to.include.keys('name', 'categories', 'contact', 'date');
+						expect(venue).to.include.keys('name', 'categories', 'contact', 'created');
 					})
 					resVenue = res.body.venues[0];
 					return Venue.findById(resVenue.id);
@@ -124,6 +124,7 @@ describe('Venues API Resource', function() {
                     expect(resVenue.contact.phone).to.equal(venue.contact.phone);
                     expect(resVenue.contact.address).to.equal(venue.contact.address);
                     expect(resVenue.contact.coordinates.lat).to.equal(venue.contact.coordinates.lng);
+                    expect(resVenue.created).to.equal(venue.created);
 				})
 		})
 	}) //end GET endpoint test
@@ -141,34 +142,32 @@ describe('Venues API Resource', function() {
 				expect(res).to.have.status(201);
 				expect(res).to.be.json;
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.include.keys('id', 'name', 'categories', 'contact');
+				expect(res.body).to.include.keys('id', 'name', 'categories', 'contact', 'created');
 				expect(res.body.id).to.not.be.null;
                 expect(resVenue.name).to.equal(venue.name);
                 expect(resVenue.categories).to.equal(venue.categories);
                 expect(resVenue.contact.phone).to.equal(venue.contact.phone);
                 expect(resVenue.contact.address).to.equal(venue.contact.address);
-                expect(resVenue.contact.coordinates.lat).to.equal(venue.contact.coordinates.lng);
+                expect(resVenue.contact.coordinates.lat).to.equal(venue.contact.coordinates.lat);
+                expect(resVenue.contact.coordinates.lng).to.equal(venue.contact.coordinates.lng);
+                expect(resVenue.created).to.equal(venue.created);
 
 				return Venue.findById(res.body.id);
 			})
-			.then(function(event){
+			.then(function(venue){
 				expect(venue.name).to.equal(newVenue.name);
-				expect(venue.description).to.equal(newVenue.description);
-				expect(venue.address.building).to.equal(newVenue.address.building);
-				expect(venue.address.street).to.equal(newVenue.address.street);
-				expect(venue.address.city).to.equal(newVenue.address.city);
-				expect(venue.address.state).to.equal(newVenue.address.state);
-				expect(venue.address.zipcode).to.equal(newVenue.address.zipcode);
-				// expect(venue.date).to.equal(newVenue.date);
-				expect(venue.time.startTime).to.equal(newVenue.time.startTime);
-				expect(venue.time.endTime).to.equal(newVenue.time.endTime);
-				expect(venue.prop).to.equal(newVenue.prop);
+				expect(venue.categories).to.equal(newVenue.categories);
+				expect(venue.contact.phone).to.equal(newVenue.contact.phone);
+				expect(venue.contact.address).to.equal(newVenue.contact.address);
+				expect(venue.contact.coordinates.lat).to.equal(newVenue.contact.coordinates.lat);
+                expect(venue.contact.coordinates.lng).to.equal(newVenue.contact.coordinates.lng);
+                expect(venue.created).to.equal(newVenue.created);
 			})
 		})
 	}) //end POST endpoint test
 
 	describe('DELETE endpoint', function() {
-	//get an venue
+	//get a venue
 	//make a delete request for venue's id
 	//assert that response has right status code
 	//prove the venue with id doesn't exist in db anymore
@@ -192,31 +191,3 @@ describe('Venues API Resource', function() {
 	}) //end DELETE endpoint test
 
 }) // end Venues API Resource test
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
