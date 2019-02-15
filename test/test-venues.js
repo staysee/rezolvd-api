@@ -27,7 +27,7 @@ function seedVenueData() {
 function generateVenueData(){
 	return {
         name: faker.lorem.words(),
-        categories: [faker.commerce.color(5)],
+        categories: [faker.commerce.color(), faker.commerce.color()],
         contact: {
             phone: faker.phone.phoneNumber(),
             address: faker.address.streetAddress(),
