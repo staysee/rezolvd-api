@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const ObjectId = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -11,8 +12,8 @@ router.get('/', (req, res) => {
 		.find()
 		.then(venues => {
 			res.json({
-				venues: venues.map((venue) => venue.serialize())
-			});
+				venues: venues.map(venue => venue.serialize())
+			})
 		})
 		.catch(err => {
             console.error(err);
@@ -31,7 +32,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', jsonParser, (req, res) => {
-	const requiredFields = ['name'];
+	const requiredFields = ['name', 'categories', 'contact'];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -43,7 +44,16 @@ router.post('/', jsonParser, (req, res) => {
 
 	Venue
 		.create({
-			name: req.body.name
+			name: req.body.name,
+        	categories: [req.body.categories],
+        	contact: {
+				phone: req.body.phone,
+				address: req.body.address,
+				coordinates: {
+					lat: req.body.lat,
+					lng: req.body.lng
+				}
+        	}
 		})
 		.then(venue => res.status(201).json(venue.serialize()))
 		.catch(err => {
@@ -55,7 +65,7 @@ router.post('/', jsonParser, (req, res) => {
 router.delete('/:id', (req, res) => {
 	Venue
 		.findByIdAndRemove(req.params.id)
-		.then(() => res.status(204).end())
+		.then(venue => res.status(204).end())
 		.catch(err => {
             console.error(err);
             res.status(500).json({message: 'Internal server error'});

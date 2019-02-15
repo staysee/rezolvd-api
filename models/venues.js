@@ -1,3 +1,5 @@
+'use strict'
+
 const mongoose = require('mongoose');
 
 const venueSchema = mongoose.Schema({
@@ -25,7 +27,8 @@ venueSchema.methods.serialize = function() {
         id: this._id,
         name: this.name,
         categories: this.categories,
-        contact: this.contact
+        contact: this.contact,
+        created: this.created
     }
 
 }

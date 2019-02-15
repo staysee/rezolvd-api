@@ -1,34 +1,39 @@
+'use strict'
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const venueRouter = require('./routes/venueRouter');
 
 mongoose.Promise = global.Promise;
 
 const { Venue } = require('./models/venues');
-const {DATABASE_URL, PORT} = require('./config');
+const { DATABASE_URL, PORT, CLIENT_ORIGIN } = require('./config');
 
 
 const jsonParser = bodyParser.json();
+
+// create express app
 const app = express();
 
+
+//logging
 app.use(morgan('common'));
 app.use(express.static('public'));
 
 //CORS
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-    if (req.method === 'OPTIONS') {
-      return res.send(204);
-    }
-    next();
-});
+app.use(
+    cors({
+        origin: CLIENT_ORIGIN
+    })
+);
 
+//Routes
 app.use('/api/venues', venueRouter);
+
 
 // catch-all endpoint if client makes request to non-existent endpoint
 app.use('*', (req, res) => {
