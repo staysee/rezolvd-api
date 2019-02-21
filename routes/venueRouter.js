@@ -41,6 +41,8 @@ router.post('/', jsonParser, (req, res) => {
 			return res.status(400).send(message);
 		}
 	}
+	console.log('***************');
+	console.log(req.body);
 
 	Venue
 		.create({

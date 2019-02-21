@@ -120,7 +120,7 @@ describe('Venues API Resource', function() {
 					// console.info(venue);
 					expect(resVenue.id).to.equal(venue.id);
                     expect(resVenue.name).to.equal(venue.name);
-                    // expect(resVenue.categories).to.equal(venue.categories);	//causing AssertionError
+                    expect(resVenue.categories).to.deep.equal(venue.categories); // use deep equal
                     console.info(typeof resVenue.categories);
                     console.info(typeof venue.categories);
                     expect(resVenue.contact.phone).to.equal(venue.contact.phone);
@@ -136,6 +136,7 @@ describe('Venues API Resource', function() {
 		it('should add a new venue', function() {
 
 			const newVenue = generateVenueData();
+			console.log(newVenue);
 
 			return chai.request(app)
 			.post('/api/venues')
@@ -148,18 +149,20 @@ describe('Venues API Resource', function() {
 				expect(res.body).to.include.keys('id', 'name', 'categories', 'contact');
 				expect(res.body.id).to.not.be.null;
                 expect(res.body.name).to.equal(newVenue.name);
-                // expect(res.body.categories).to.equal(newVenue.categories);	//causing AssertionError
+				expect(res.body.categories).to.deep.equal(newVenue.categories);
+				// expect(res.body).to.deep.equal(newVenue);
 				// expect(res.body.contact.phone).to.equal(newVenue.contact.phone);	//undefined
                 // expect(res.body.contact.address).to.equal(newVenue.contact.address); //undefined
                 // expect(res.body.contact.coordinates.lat).to.equal(newVenue.contact.coordinates.lat); //undefined
                 // expect(res.body.contact.coordinates.lng).to.equal(newVenue.contact.coordinates.lng); //undefined
-                expect(res.body.created).to.not.be.null;
+				expect(res.body.created).to.not.be.null;
+				console.log(res.body);
 
 				return Venue.findById(res.body.id);
 			})
 			.then(function(venue){
 				expect(venue.name).to.equal(newVenue.name);
-				// expect(venue.categories).to.equal(newVenue.categories); //AssertionError
+				expect(venue.categories).to.deep.equal(newVenue.categories);
 				// expect(venue.contact.phone).to.equal(newVenue.contact.phone); //undefined
 				// expect(venue.contact.address).to.equal(newVenue.contact.address); //undefined
 				// expect(venue.contact.coordinates.lat).to.equal(newVenue.contact.coordinates.lat); //undefined
