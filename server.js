@@ -7,10 +7,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const venueRouter = require('./routes/venueRouter');
+const userRouter = require('./routes/userRouter');
 
 mongoose.Promise = global.Promise;
 
 const { Venue } = require('./models/venues');
+const { User } = require('./models/users');
 const { DATABASE_URL, PORT, CLIENT_ORIGIN } = require('./config');
 
 
@@ -33,6 +35,7 @@ app.use(
 
 //Routes
 app.use('/api/venues', venueRouter);
+app.use('/api/users', userRouter);
 
 
 // catch-all endpoint if client makes request to non-existent endpoint
