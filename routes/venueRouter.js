@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
 		});
 });
 
+//get one venue
 router.get('/:id', (req, res) => {
 	Venue
 		.findById(req.params.id)
@@ -31,6 +32,7 @@ router.get('/:id', (req, res) => {
 		});
 });
 
+// create new venue
 router.post('/', jsonParser, (req, res) => {
 	const requiredFields = ['name', 'categories', 'contact'];
 	for (let i=0; i<requiredFields.length; i++) {
@@ -64,6 +66,7 @@ router.post('/', jsonParser, (req, res) => {
 		});
 })
 
+// delete venue
 router.delete('/:id', (req, res) => {
 	Venue
 		.findByIdAndRemove(req.params.id)

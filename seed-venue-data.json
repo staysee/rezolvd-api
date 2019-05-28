@@ -1,0 +1,48 @@
+{
+    "name": "Bottega Louie",
+    "categories": ["italian"],
+    "contact": {
+        "phone": "(858) 270-1234",
+        "address": "700 S Grand Ave (at 7th Str), Los Angeles, CA 90017",
+        "coordinates": {
+            "lat": 34.04727115230939,
+            "lng": -118.25651989625818
+        }
+    }
+}
+{
+    "name": "Bestia",
+    "categories": ["italian"],
+    "contact": {
+        "phone": "(858) 270-1234",
+        "address": "2121 E 7th Pl (at Santa Fe Ave), Los Angeles, CA 90021",
+        "coordinates": {
+            "lat": 34.03363661822315,
+            "lng": -118.22927759109794
+        }
+    }
+}
+{
+    "name": "Sushi Ota",
+    "categories": ["sushi"],
+    "contact": {
+        "phone": "(858) 270-1234",
+        "address": "1234 S 10th Ave, San Diego, CA 92130",
+        "coordinates": {
+            "lat": 34.04727115230939,
+            "lng": -118.25651989625818
+        }
+    }
+}
+{
+    "name": "Starbucks",
+    "categories": ["coffee"],
+    "contact": {
+        "phone": "(858) 270-1234",
+        "address": "2325 Huntington Drive (at Santa Fe Ave), Pasadena, CA 90021",
+        "coordinates": {
+            "lat": 34.03363661822315,
+            "lng": -118.22927759109794
+        }
+    }
+}
